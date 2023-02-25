@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
-#a shekk script that prints the name of the files in the present working directory.
+# This script displays the content of the current directory in list format
+# Only displays the part of the name after the first dash
 
-for file in *
-do
-    if [ -f "$file" ] && [[ "$file" != .* ]] && [[ "$file" == *-* ]]
-    then
-        basename=${file#*-}
-        echo "$basename"
-    fi
+mylist=$(ls)
+
+for i in $mylist; do
+  echo "$i" | cut -d '-' -f2
 done
-
