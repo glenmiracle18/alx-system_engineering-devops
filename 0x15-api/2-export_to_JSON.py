@@ -6,9 +6,9 @@ and exports the data in JSON format.
 Usage: python3 gather_data_from_an_API.py <employee_id>
 """
 
-import sys
-import requests
 import json
+import requests
+import sys
 
 
 def fetch_employee_data(employee_id):
@@ -78,7 +78,7 @@ def export_todo_data_to_json(employee_id, todo_data):
         })
 
     with open(file_name, 'w') as json_file:
-        json.dump({employee_id: employee_todo_data}, json_file, indent=4)
+        json.dump({str(employee_id): employee_todo_data}, json_file, indent=4)
 
     print(f'TODO list data exported to {file_name}.')
 
