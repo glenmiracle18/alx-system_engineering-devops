@@ -1,11 +1,26 @@
 #!/usr/bin/python3
-"""Exports to-do list information for a given employee ID to JSON format."""
+"""
+This script fetches information about an employee's TODO list progress from a REST API
+and exports the data in JSON format.
+
+Usage: python3 gather_data_from_an_API.py <employee_id>
+"""
 
 import sys
 import requests
 import json
 
+
 def fetch_employee_data(employee_id):
+    """
+    Fetches employee data and TODO list data from the API.
+
+    Args:
+        employee_id (int): ID of the employee.
+
+    Returns:
+        tuple: A tuple containing employee data and TODO list data.
+    """
     base_url = 'https://jsonplaceholder.typicode.com'
     employee_url = f'{base_url}/users/{employee_id}'
     todo_url = f'{base_url}/todos?userId={employee_id}'
@@ -25,7 +40,15 @@ def fetch_employee_data(employee_id):
         print(f'Error occurred: {e}')
         sys.exit(1)
 
+
 def display_employee_todo_progress(employee_name, todo_data):
+    """
+    Displays the employee's TODO list progress.
+
+    Args:
+        employee_name (str): Name of the employee.
+        todo_data (list): List of TODO tasks.
+    """
     total_tasks = len(todo_data)
     done_tasks = [task for task in todo_data if task['completed']]
     num_done_tasks = len(done_tasks)
@@ -35,7 +58,15 @@ def display_employee_todo_progress(employee_name, todo_data):
     for task in done_tasks:
         print(f"\t{task['title']}")
 
+
 def export_todo_data_to_json(employee_id, todo_data):
+    """
+    Exports the employee's TODO list data to a JSON file.
+
+    Args:
+        employee_id (int): ID of the employee.
+        todo_data (list): List of TODO tasks.
+    """
     file_name = f'{employee_id}.json'
     employee_todo_data = []
 
@@ -50,6 +81,7 @@ def export_todo_data_to_json(employee_id, todo_data):
         json.dump({employee_id: employee_todo_data}, json_file, indent=4)
 
     print(f'TODO list data exported to {file_name}.')
+
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
